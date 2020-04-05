@@ -7,3 +7,11 @@ spec:
   metadata:
   - name: connectionString
     value: Endpoint=sb://<EVENT_HUBS_NAMESPACE>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<EVENT_HUBS_KEY>;EntityPath=<EVENT_HUBS_NAME>
+  - name: storageAccountName    # Azure Storage Account Name
+    value: "accountName"
+  - name: storageAccountKey     # Azure Storage Account Key
+    value: "accountKey"                
+  - name: storageContainerName  # Azure Storage Container Name
+    value: "containerName"
+  - name: consumerGroup         # EventHubs consumer group
+    value: "group1"
