@@ -5,5 +5,14 @@ metadata:
 spec:
   type: bindings.azure.eventhubs
   metadata:
+  # spec: https://github.com/dapr/docs/blob/master/reference/specs/bindings/eventhubs.md
   - name: connectionString
-    value: Endpoint=sb://<EVENT_HUBS_NAMESPACE>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<EVENT_HUBS_KEY>;EntityPath=<EVENT_HUBS_NAME>
+    value: Endpoint=sb://<eventhub-name>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<shared-accesskey>;EntityPath=<eventhub-name>
+  - name: consumerGroup
+    value: $Default
+  - name: storageAccountName
+    value: <name of created store account>
+  - name: storageAccountKey
+    value: <base 64 value of storage key>
+  - name: storageContainerName
+    value: <name of the storage container>
