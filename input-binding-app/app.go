@@ -1,36 +1,66 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 )
 
-var port string
+func main() {
+	addr := getAddress()
 
-func init() {
-	port = os.Getenv("APP_PORT")
+	fmt.Printf("will listen on %s\n", addr)
+	http.HandleFunc("/eventhubs-input", func(rw http.ResponseWriter, req *http.Request) {
+		printRequest(req)
+		if subscribe(rw, req) {
+			return
+		}
+		writeResponse(rw)
+	})
+	if err := http.ListenAndServe(addr, nil); err != nil {
+		panic(err)
+	}
+}
+
+// getAddress retturns the address where the http server will bind to
+func getAddress() string {
+	// parse application port
+	fmt.Println("init")
+	port := os.Getenv("APP_PORT")
 	if port == "" {
 		log.Fatalf("missing environment variable %s", "APP_PORT")
 	}
-}
-func main() {
-	http.HandleFunc("/eventhubs-input", func(rw http.ResponseWriter, req *http.Request) {
-		var _time TheTime
-		err := json.NewDecoder(req.Body).Decode(&_time)
-		if err != nil {
-			fmt.Println("error reading message from event hub binding", err)
-			rw.WriteHeader(500)
-			return
-		}
-		fmt.Printf("time from Event Hubs '%s'\n", _time.Time)
-		rw.WriteHeader(200)
-	})
-	http.ListenAndServe(":"+port, nil)
+	addr := ":" + port
+	return addr
 }
 
-type TheTime struct {
-	Time string `json:"time"`
+// printRequest prints the HTTP request
+func printRequest(req *http.Request) {
+	bodyBytes, err := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyString := string(bodyBytes)
+	fmt.Printf("received request, method: %s, payload: %s\n", req.Method, bodyString)
+}
+
+// signal interest in the input binding
+func subscribe(rw http.ResponseWriter, req *http.Request) bool {
+	if req.Method == "OPTIONS" {
+		fmt.Printf("subscribing to binding")
+		rw.WriteHeader(200)
+		return true
+	}
+	return false
+}
+
+// be nice and write a empty response bck
+func writeResponse(rw http.ResponseWriter) {
+	rw.WriteHeader(200)
+	if _, err := rw.Write([]byte(`{}`)); err != nil {
+		fmt.Printf("error while sending response: %v\n", err)
+	}
 }
