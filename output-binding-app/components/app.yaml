@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp-output-binding
+  labels:
+    app: goapp-output-binding
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goapp-output-binding
+  template:
+    metadata:
+      labels:
+        app: goapp-output-binding
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "goapp-output-binding"
+        dapr.io/log-level: "debug"
+    spec:
+      containers:
+        - name: goapp-output-binding
+          image: nachtmaar/eventhubs-output-binding
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+          env:
+            - name: APP_PORT
+              value: "3000"
+            - name: DAPR_HTTP_PORT
+              value: "3500"
