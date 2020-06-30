@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp-input-binding
+  labels:
+    app: goapp-input-binding
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goapp-input-binding
+  template:
+    metadata:
+      labels:
+        app: goapp-input-binding
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "bla"
+        dapr.io/port: "3000"
+        dapr.io/log-level: "debug"
+    spec:
+      containers:
+        - name: goapp-input-binding
+          image: nachtmaar/az-eh-pubsub
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+          env:
+            - name: APP_PORT
+              value: "3000"
