@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: goapp-input-binding
-          image: nachtmaar/az-eh-pubsub
+          image: ko://github.com/nachtmaar/dapr-eventhubs-bindings/pubsub
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
