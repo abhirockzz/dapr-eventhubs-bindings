@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: goapp-input-binding
+  name: goapp-pubsub
   labels:
-    app: goapp-input-binding
+    app: goapp-pubsub
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: goapp-input-binding
+      app: goapp-pubsub
   template:
     metadata:
       labels:
-        app: goapp-input-binding
+        app: goapp-pubsub
       annotations:
         dapr.io/enabled: "true"
         dapr.io/id: "bla"
