@@ -2,7 +2,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: messagebus-eventhubs-e
+  name: messagebus-eventhubs
 spec:
   type: pubsub.azure.eventhubs
   metadata:
@@ -14,19 +14,3 @@ spec:
       value: $DAPR_AZ_EH_TOPIC_E_STORAGE_ACCOUNT_KEY
     - name: storageContainerName
       value: $DAPR_AZ_EH_TOPIC_E_STORAGE_CONTAINER_NAME
----
-apiVersion: dapr.io/v1alpha1
-kind: Component
-metadata:
-  name: messagebus-eventhubs-f
-spec:
-  type: pubsub.azure.eventhubs
-  metadata:
-    - name: connectionString
-      value: $DAPR_AZ_EH_TOPIC_F_CONNECTION_STRING
-    - name: storageAccountName
-      value: daprazureeventingonly
-    - name: storageAccountKey
-      value: $DAPR_AZ_EH_TOPIC_F_STORAGE_ACCOUNT_KEY
-    - name: storageContainerName
-      value: $DAPR_AZ_EH_TOPIC_F_STORAGE_CONTAINER_NAME
