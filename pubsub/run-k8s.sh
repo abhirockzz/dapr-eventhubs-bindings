@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
-envsubst < components_old/* | cat
-envsubst < components_old/* | ko delete -f -
-envsubst < components_old/* | ko apply -f -
+envsubst < components/* | cat
+envsubst < components/* | ko delete -f -
+envsubst < components/* | ko apply -f -
 
 sleep 10
 
@@ -10,7 +10,7 @@ kubectl wait \
     --for condition=Available \
     --for condition=Progressing \
     deployment \
-    -l app=goapp-input-binding
+    -l app=goapp-pubsub
 
 stern \
-    -l app=goapp-input-binding
+    -l app=goapp-pubsub

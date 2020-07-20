@@ -7,10 +7,10 @@ spec:
   type: pubsub.azure.eventhubs
   metadata:
     - name: connectionString
-      value: $DAPR_AZ_EH_TOPIC_E_CONNECTION_STRING
+      value: $DAPR_AZ_EH_TOPIC_F_CONNECTION_STRING
     - name: storageAccountName
       value: daprazureeventingonly
     - name: storageAccountKey
-      value: $DAPR_AZ_EH_TOPIC_E_STORAGE_ACCOUNT_KEY
+      value: $DAPR_AZ_EH_TOPIC_F_STORAGE_ACCOUNT_KEY
     - name: storageContainerName
-      value: $DAPR_AZ_EH_TOPIC_E_STORAGE_CONTAINER_NAME
+      value: $DAPR_AZ_EH_TOPIC_F_STORAGE_CONTAINER_NAME
